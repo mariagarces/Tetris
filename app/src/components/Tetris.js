@@ -12,6 +12,7 @@ import { StyledTetrisWrapper, StyledTetris } from "./styles/StyledTetris";
 import { usePlayer } from "../hooks/usePlayer";
 import { useStage } from "../hooks/useStage";
 import { useInterval } from "../hooks/useInterval";
+import { useGameStatus } from "../hooks/useGameStatus";
 
 const Tetris = () => {
 
@@ -19,7 +20,8 @@ const Tetris = () => {
     const [gameOver, setGameOver] = useState(false);
 
     const [player, updatePlayerPosition, resetPlayer, playerRotate] = usePlayer();
-    const [stage, setStage] = useStage(player, resetPlayer);
+    const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
+    const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(rowsCleared);
 
     const movePlayer = (direction) => {
         if (!checkCollision(player, stage, { x: direction, y: 0 })) {
@@ -32,9 +34,18 @@ const Tetris = () => {
         resetPlayer();
         setGameOver(false);
         setDropTime(1000);
+        setScore(0);
+        setRows(0);
+        setLevel(0);
     }
 
     const drop = () => {
+        // Increase level when clear 10 rows
+        if (rows > (level + 1) * 10) {
+            setLevel(prev => prev + 1);
+            setDropTime(1000 / (level + 1) + 200);
+        }
+
         if (!checkCollision(player, stage, { x: 0, y: 1 })) {
             updatePlayerPosition({ x: 0, y: 1, collided: false });
         } else {
@@ -50,7 +61,7 @@ const Tetris = () => {
     const keyUp = ({ keyCode }) => {
         if (!gameOver) {
             if (keyCode === 40) {
-                setDropTime(1000);
+                setDropTime(1000 / (level + 1) + 200);
             }
         }
     }
@@ -85,7 +96,9 @@ const Tetris = () => {
                 <aside>
                     <div>
                         <p>Lines</p>
-                        <p>0000</p>
+                        <p>{rows}</p>
+                        <p>{`Score ${score}`}</p>
+                        <p>{`Level ${level}`}</p>
                     </div>
                     <button onClick={startGame}>start game</button>
                 </aside>
