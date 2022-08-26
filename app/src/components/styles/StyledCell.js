@@ -8,8 +8,9 @@ export const StyledCell = styled.div`
     border-right-color: rgba(${props => props.color}, 1);
     border-top-color: rgba(${props => props.color}, 1);
     border-left-color: rgba(${props => props.color}, 0.3);
-    border-top-left-radius: ${props => (props.border.includes('1') ? '15px' : '0px')};
-    border-top-right-radius: ${props => (props.border.includes('2') ? '15px' : '0px')};
-    border-bottom-right-radius: ${props => (props.border.includes('3') ? '15px' : '0px')};
-    border-bottom-left-radius: ${props => (props.border.includes('4') ? '15px' : '0px')};
 `
+
+// border-top-left-radius: ${props => (props.border.includes('1') ? '15px' : '0px')};
+//     border-top-right-radius: ${props => (props.border.includes('2') ? '15px' : '0px')};
+//     border-bottom-right-radius: ${props => (props.border.includes('3') ? '15px' : '0px')};
+//     border-bottom-left-radius: ${props => (props.border.includes('4') ? '15px' : '0px')};

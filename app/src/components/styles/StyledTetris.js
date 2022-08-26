@@ -4,6 +4,7 @@ export const StyledTetrisWrapper = styled.div`
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    background-color: #C9D3D3;
 `
 
 export const StyledTetris = styled.div`

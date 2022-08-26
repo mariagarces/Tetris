@@ -4,6 +4,8 @@ import { checkCollision } from "../common/helpers/checkCollision";
 
 // Components
 import Stage from "./Stage";
+import Display from './Display';
+import StartButton from "./StartButton";
 
 // Styled components
 import { StyledTetrisWrapper, StyledTetris } from "./styles/StyledTetris";
@@ -18,6 +20,7 @@ const Tetris = () => {
 
     const [dropTime, setDropTime] = useState(null);
     const [gameOver, setGameOver] = useState(false);
+    const [isDisabled, setDisabled] = useState(true);
 
     const [player, updatePlayerPosition, resetPlayer, playerRotate] = usePlayer();
     const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
@@ -37,6 +40,7 @@ const Tetris = () => {
         setScore(0);
         setRows(0);
         setLevel(0);
+        setDisabled(true);
     }
 
     const drop = () => {
@@ -94,13 +98,10 @@ const Tetris = () => {
             <StyledTetris>
                 <Stage stage={stage} />
                 <aside>
-                    <div>
-                        <p>Lines</p>
-                        <p>{rows}</p>
-                        <p>{`Score ${score}`}</p>
-                        <p>{`Level ${level}`}</p>
-                    </div>
-                    <button onClick={startGame}>start game</button>
+                    <Display title="LINES" value={rows} />
+                    <Display title="SCORE" value={score} />
+                    <Display title="LEVEL" value={level} />
+                    <StartButton isDisabled={true} onClick={startGame} />
                 </aside>
             </StyledTetris>
         </StyledTetrisWrapper>
